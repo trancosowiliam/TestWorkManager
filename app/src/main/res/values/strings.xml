@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">TestWorkManager</string>
 
-
     <string name="notification_foreground_service_running">O serviço de atualização está rodando.</string>
     <string name="notification_foreground_scheduling_update">Agendando serviço de atualização.</string>
-
-
     <string name="notification_foreground_checking_updates">Verificando por Atualizações.</string>
+
+    <string-array name="frequency">
+        <item>Minutos</item>
+        <item>Horas</item>
+    </string-array>
 
 </resources>

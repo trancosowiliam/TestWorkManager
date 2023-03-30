@@ -14,10 +14,13 @@
         android:theme="@style/Theme.TestWorkManager"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.config.ConfigActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.loglist.LogListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,16 +29,9 @@
             </intent-filter>
         </activity>
 
-        <service android:enabled="true" android:name=".boot.ServiceRunner" />
-
         <service
-            android:name="com.dalcim.testworkmanager.scheduler.UpdatesSchedulerService"
-            tools:ignore="ExportedService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="action-schedule-test" />
-            </intent-filter>
-        </service>
+            android:name=".service.ServiceRunner"
+            android:enabled="true" />
     </application>
 
 </manifest>

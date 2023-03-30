@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    android:padding="16dp"
+    tools:context=".presentation.main.MainActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnStartServer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="iniciar servico"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,21 +18,31 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnScheduleServer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="agendar servico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnStartServer"/>
+        app:layout_constraintTop_toBottomOf="@id/btnStartServer" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnShowLog"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnGoToLogList"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Exibir log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnScheduleServer" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGoToConfig"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Configurar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGoToLogList" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

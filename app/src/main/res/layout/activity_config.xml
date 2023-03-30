@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".presentation.config.ConfigActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblFrequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frequencia"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtFrequency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="40"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toStartOf="@id/spinnerFrequency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblFrequency" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerFrequency"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="60"
+        app:layout_constraintBottom_toBottomOf="@+id/edtFrequency"
+        app:layout_constraintTop_toTopOf="@id/edtFrequency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/edtFrequency" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_separator"
+        android:text="Peso dos retornos"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtFrequency" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturnSuccess"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Success"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@id/lblReturnFailure"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblReturns" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturnFailure"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Failure"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@id/lblReturnRetry"
+        app:layout_constraintStart_toEndOf="@id/lblReturnSuccess"
+        app:layout_constraintTop_toBottomOf="@id/lblReturns" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturnRetry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Retry"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/lblReturnFailure"
+        app:layout_constraintTop_toBottomOf="@id/lblReturns" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtReturnSuccess"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@id/edtReturnFailure"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblReturnSuccess" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtReturnFailure"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@id/edtReturnRetry"
+        app:layout_constraintStart_toEndOf="@id/edtReturnSuccess"
+        app:layout_constraintTop_toBottomOf="@id/lblReturnSuccess" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtReturnRetry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/edtReturnFailure"
+        app:layout_constraintTop_toBottomOf="@id/lblReturnSuccess" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturnSuccessRatio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:gravity="end"
+        android:text="0/0"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@id/lblReturnFailureRatio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtReturnSuccess" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturnFailureRatio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:gravity="end"
+        android:text="0/0"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@id/lblReturnRetryRatio"
+        app:layout_constraintStart_toEndOf="@id/lblReturnSuccessRatio"
+        app:layout_constraintTop_toBottomOf="@id/edtReturnSuccess" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblReturnRetryRatio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:gravity="end"
+        android:text="0/0"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/lblReturnFailureRatio"
+        app:layout_constraintTop_toBottomOf="@id/edtReturnSuccess" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,16 +7,18 @@ import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import com.dalcim.testworkmanager.R
 import com.dalcim.testworkmanager.database.LogDatabase
+import com.dalcim.testworkmanager.databinding.ActivityLogListBinding
 
 class LogListActivity : AppCompatActivity() {
-    private val recLogList by lazy { findViewById<RecyclerView>(R.id.recLogList) }
     private val database by lazy { LogDatabase() }
+    private lateinit var binding: ActivityLogListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log_list)
+        binding = ActivityLogListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recLogList.adapter = LogListAdapter(database.getLogs())
+        binding.recLogList.adapter = LogListAdapter(database.getLogs())
     }
 
     companion object {

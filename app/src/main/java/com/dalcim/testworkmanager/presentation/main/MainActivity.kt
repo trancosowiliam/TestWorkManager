@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatButton
-import com.dalcim.testworkmanager.R
 import com.dalcim.testworkmanager.service.ServiceRunner
-import com.dalcim.testworkmanager.database.LogDatabase
 import com.dalcim.testworkmanager.databinding.ActivityMainBinding
 import com.dalcim.testworkmanager.presentation.config.ConfigActivity
 import com.dalcim.testworkmanager.presentation.loglist.LogListActivity
@@ -46,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private fun scheduleTest() {
         val updatesJobIntent = Intent().apply {
             component =
-                ComponentName(PKG_NAME, "$PKG_NAME.scheduler.UpdatesSchedulerService")
+                ComponentName(PKG_NAME, "$PKG_NAME.service.ServiceScheduler")
             action = UPDATES_SCHEDULER_ACTION
         }
 

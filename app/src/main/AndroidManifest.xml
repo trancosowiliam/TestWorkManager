@@ -31,7 +31,18 @@
 
         <service
             android:name=".service.ServiceRunner"
+            android:exported="true"
             android:enabled="true" />
+
+        <service
+            android:name=".service.ServiceScheduler"
+            tools:ignore="ExportedService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="action-schedule-test" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

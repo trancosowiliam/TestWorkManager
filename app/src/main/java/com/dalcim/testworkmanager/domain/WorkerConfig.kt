@@ -11,4 +11,14 @@ data class WorkerConfig(
         HOUR,
         MINUTE
     }
+
+    companion object {
+        val EMPTY = WorkerConfig(
+            frequency = 0,
+            frequencyUnit = FrequencyUnit.MINUTE,
+            successRatio = 0,
+            failureRatio = 0,
+            retryRatio = 0
+        )
+    }
 }

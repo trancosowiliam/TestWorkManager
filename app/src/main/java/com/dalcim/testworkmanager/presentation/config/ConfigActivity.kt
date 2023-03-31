@@ -2,7 +2,6 @@ package com.dalcim.testworkmanager.presentation.config
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,13 +9,15 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.dalcim.testworkmanager.R
 import com.dalcim.testworkmanager.databinding.ActivityConfigBinding
 import com.dalcim.testworkmanager.domain.WorkerConfig
-import java.lang.Exception
+import com.dalcim.testworkmanager.repository.TestWorkManagerRepository
 
 class ConfigActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfigBinding
+    private val repository by lazy { TestWorkManagerRepository(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,7 @@ class ConfigActivity : AppCompatActivity() {
 
         setupView()
         setupListeners()
+        loadConfig()
     }
 
     private fun setupView() {
@@ -36,12 +38,6 @@ class ConfigActivity : AppCompatActivity() {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerFrequency.adapter = adapter
-
-        binding.spinnerFrequency.setSelection(0)
-        binding.edtFrequency.setText("0")
-        binding.edtReturnSuccess.setText("0")
-        binding.edtReturnFailure.setText("0")
-        binding.edtReturnRetry.setText("0")
     }
 
     private fun setupListeners() {
@@ -52,6 +48,20 @@ class ConfigActivity : AppCompatActivity() {
         binding.edtReturnSuccess.addTextChangedListener(ratioTextChangedListener())
         binding.edtReturnFailure.addTextChangedListener(ratioTextChangedListener())
         binding.edtReturnRetry.addTextChangedListener(ratioTextChangedListener())
+    }
+
+    private fun loadConfig() {
+        val config = repository.getConfig()
+        binding.spinnerFrequency.setSelection(
+            when(config.frequencyUnit) {
+                WorkerConfig.FrequencyUnit.MINUTE -> 0
+                else -> 1
+            }
+        )
+        binding.edtFrequency.setText(config.frequency.toString())
+        binding.edtReturnSuccess.setText(config.successRatio.toString())
+        binding.edtReturnFailure.setText(config.failureRatio.toString())
+        binding.edtReturnRetry.setText(config.retryRatio.toString())
     }
 
     private fun save() {
@@ -78,8 +88,16 @@ class ConfigActivity : AppCompatActivity() {
             retryRatio = retryRatio
         )
 
+        saveInDatabase(workerConfig)
+    }
+
+    private fun saveInDatabase(workerConfig: WorkerConfig) {
         Log.i("WIL_LOG", workerConfig.toString())
 
+        if(repository.saveConfig(workerConfig)) {
+            showMessage("Salvo com sucesso")
+            finish()
+        }
     }
 
     private fun validateConfig(): Boolean {

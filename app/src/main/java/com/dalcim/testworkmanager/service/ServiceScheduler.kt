@@ -8,12 +8,19 @@ import android.os.Build
 import android.os.IBinder
 import androidx.work.*
 import com.dalcim.testworkmanager.R
+import com.dalcim.testworkmanager.domain.Breadcrumb
 import com.dalcim.testworkmanager.ext.createForegroundNotification
 import com.dalcim.testworkmanager.notifier.createChannelIfNeeded
+import com.dalcim.testworkmanager.repository.BreadcrumbRepository
 import java.util.concurrent.TimeUnit
 
 class ServiceScheduler: Service() {
+
+    private val repository by lazy { BreadcrumbRepository(this) }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        repository.addBreadcrumb(Breadcrumb("ServiceScheduler", "onStartCommand entry"))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(NOTIFICATION_ID, createNotification())
@@ -54,6 +61,8 @@ class ServiceScheduler: Service() {
         } else {
             TimeUnit.HOURS
         }
+
+        repository.addBreadcrumb(Breadcrumb("ServiceScheduler", "createPeriodicWorkRequest interval:$interval, timeUnit:$timeUnit"))
 
         val data = Data.Builder().apply {
             putString("from", "scheduler")

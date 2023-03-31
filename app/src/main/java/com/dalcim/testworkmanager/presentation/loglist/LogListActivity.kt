@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
-import com.dalcim.testworkmanager.R
-import com.dalcim.testworkmanager.database.LogDatabase
+import android.util.Log
 import com.dalcim.testworkmanager.databinding.ActivityLogListBinding
+import com.dalcim.testworkmanager.repository.BreadcrumbRepository
+import com.dalcim.testworkmanager.repository.ConfigRepository
 
 class LogListActivity : AppCompatActivity() {
-    private val database by lazy { LogDatabase() }
+    private val repository by lazy { BreadcrumbRepository(this) }
     private lateinit var binding: ActivityLogListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,9 @@ class LogListActivity : AppCompatActivity() {
         binding = ActivityLogListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.recLogList.adapter = LogListAdapter(database.getLogs())
+        binding.recLogList.adapter = LogListAdapter(repository.getBreadcrumbs().also {
+            Log.i("WIL_LOG", it.toString())
+        })
     }
 
     companion object {

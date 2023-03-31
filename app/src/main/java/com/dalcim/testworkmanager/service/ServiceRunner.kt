@@ -11,20 +11,20 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.dalcim.testworkmanager.R
-import com.dalcim.testworkmanager.database.LogDatabase
-import com.dalcim.testworkmanager.domain.LogEntity
+import com.dalcim.testworkmanager.domain.Breadcrumb
 import com.dalcim.testworkmanager.ext.createForegroundNotification
 import com.dalcim.testworkmanager.notifier.createChannelIfNeeded
+import com.dalcim.testworkmanager.repository.BreadcrumbRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.concurrent.TimeUnit
 
 class ServiceRunner : Service() {
 
-    private val database by lazy { LogDatabase() }
+    private val repository by lazy { BreadcrumbRepository(this) }
 
     @DelicateCoroutinesApi
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        database.saveLog(LogEntity("ServiceRunner.onStartCommand"))
+        repository.addBreadcrumb(Breadcrumb("ServiceRunner", "onStartCommand entry"))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(NOTIFICATION_ID, createNotification())
         }

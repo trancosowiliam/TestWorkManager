@@ -3,19 +3,20 @@ package com.dalcim.testworkmanager.service
 import android.content.Context
 import androidx.work.*
 import com.dalcim.testworkmanager.R
-import com.dalcim.testworkmanager.database.LogDatabase
-import com.dalcim.testworkmanager.domain.LogEntity
+import com.dalcim.testworkmanager.domain.Breadcrumb
 import com.dalcim.testworkmanager.ext.createForegroundNotification
 import com.dalcim.testworkmanager.notifier.createChannelIfNeeded
+import com.dalcim.testworkmanager.repository.BreadcrumbRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class TestWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
-    private val database by lazy { LogDatabase() }
+    private val repository by lazy { BreadcrumbRepository(context) }
+
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        database.saveLog(LogEntity("TestWorker.doWork"))
+        repository.addBreadcrumb(Breadcrumb("TestWorker", "doWork entry"))
 
         val executionFrom = inputData.getString(EXECUTOR_FROM_KEY)
         val isFromApplication = executionFrom == FROM_APP
@@ -28,14 +29,15 @@ class TestWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
         if (fromApplicationRule || fromSchedulerRule) {
             return@withContext Result.success().also {
-                database.saveLog(LogEntity("TestWorker.doWork.Result.success"))
+                repository.addBreadcrumb(Breadcrumb("TestWorker", "doWork running"))
+                repository.addBreadcrumb(Breadcrumb("TestWorker", "Result.success returned"))
             }
         }
 
         setForeground(createForegroundInfo())
 
         return@withContext Result.retry().also {
-            database.saveLog(LogEntity("TestWorker.doWork.Result.retry"))
+            repository.addBreadcrumb(Breadcrumb("TestWorker", "Result.retry returned"))
         }
     }
 

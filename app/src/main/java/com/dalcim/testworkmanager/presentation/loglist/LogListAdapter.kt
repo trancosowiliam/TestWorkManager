@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dalcim.testworkmanager.databinding.LogItemBinding
-import com.dalcim.testworkmanager.domain.LogEntity
+import com.dalcim.testworkmanager.domain.Breadcrumb
 import com.dalcim.testworkmanager.ext.format
 import java.util.*
 
-class LogListAdapter(private val logItems: List<LogEntity>) :
+class LogListAdapter(private val breadcrumbs: List<Breadcrumb>) :
     RecyclerView.Adapter<LogListAdapter.LogViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
@@ -17,19 +17,19 @@ class LogListAdapter(private val logItems: List<LogEntity>) :
     }
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
-        holder.bind(logItems[position])
+        holder.bind(breadcrumbs[position])
     }
 
     override fun getItemCount(): Int {
-        return logItems.size
+        return breadcrumbs.size
     }
 
 
     inner class LogViewHolder(private val binding: LogItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(logEntityBkp: LogEntity) {
-            binding.txtEventName.text = logEntityBkp.event
-            binding.txtEventDate.text = Date(logEntityBkp.time).format()
+        fun bind(breadcrumbs: Breadcrumb) {
+            binding.txtEventName.text = "${breadcrumbs.where}.${breadcrumbs.event}"
+            binding.txtEventDate.text = breadcrumbs.date.format()
         }
     }
 }

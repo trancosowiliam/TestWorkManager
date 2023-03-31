@@ -13,11 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dalcim.testworkmanager.R
 import com.dalcim.testworkmanager.databinding.ActivityConfigBinding
 import com.dalcim.testworkmanager.domain.WorkerConfig
-import com.dalcim.testworkmanager.repository.TestWorkManagerRepository
+import com.dalcim.testworkmanager.repository.ConfigRepository
 
 class ConfigActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfigBinding
-    private val repository by lazy { TestWorkManagerRepository(this) }
+    private val repository by lazy { ConfigRepository(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,7 +6,7 @@ import com.dalcim.testworkmanager.database.domain.ConfigEntity
 import com.dalcim.testworkmanager.domain.WorkerConfig
 import com.dalcim.testworkmanager.domain.WorkerConfig.Companion.EMPTY
 
-class TestWorkManagerRepository(private val context: Context) {
+class ConfigRepository(private val context: Context) {
 
     private val testWorkManagerDatabase by lazy { TestWorkManagerDatabase.buildDatabase(context) }
     private val configDao by lazy { testWorkManagerDatabase.configDao() }

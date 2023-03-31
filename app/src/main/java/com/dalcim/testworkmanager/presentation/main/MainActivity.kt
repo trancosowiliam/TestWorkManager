@@ -15,8 +15,6 @@ import com.dalcim.testworkmanager.presentation.loglist.LogListActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private val database by lazy { LogDatabase() }
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +46,8 @@ class MainActivity : AppCompatActivity() {
     private fun scheduleTest() {
         val updatesJobIntent = Intent().apply {
             component =
-                ComponentName(PDM_PKG_NAME, "$PDM_PKG_NAME.scheduler.UpdatesSchedulerService")
-            action = PDM_UPDATES_SCHEDULER_ACTION
+                ComponentName(PKG_NAME, "$PKG_NAME.scheduler.UpdatesSchedulerService")
+            action = UPDATES_SCHEDULER_ACTION
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val PDM_PKG_NAME = "com.dalcim.testworkmanager"
-        private const val PDM_UPDATES_SCHEDULER_ACTION = "action-schedule-test"
+        private const val PKG_NAME = "com.dalcim.testworkmanager"
+        private const val UPDATES_SCHEDULER_ACTION = "action-schedule-test"
     }
 }

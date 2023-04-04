@@ -5,9 +5,14 @@
     <string name="notification_foreground_scheduling_update">Agendando serviço de atualização.</string>
     <string name="notification_foreground_checking_updates">Verificando por Atualizações.</string>
 
-    <string-array name="frequency">
+    <string-array name="interval_unit">
         <item>Minutos</item>
         <item>Horas</item>
+    </string-array>
+
+    <string-array name="retry_policy">
+        <item>Exponential</item>
+        <item>linear</item>
     </string-array>
 
 </resources>

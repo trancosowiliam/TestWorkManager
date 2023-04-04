@@ -9,8 +9,11 @@ import com.dalcim.testworkmanager.domain.WorkerConfig
 data class ConfigEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val frequency: Int,
-    val frequencyUnit: Int,
+    val interval: Int,
+    val intervalUnit: Int,
+    val retryInterval: Int,
+    val retryIntervalUnit: Int,
+    val retryPolicy: Int,
     val successRatio: Int,
     val failureRatio: Int,
     val retryRatio: Int
@@ -18,16 +21,28 @@ data class ConfigEntity(
     companion object {
         const val TABLE_NAME = "Config"
 
-        const val MINUTE_ID = 0
-        const val HOUR_ID = 1
+        private const val MINUTE_ID = 0
+        private const val HOUR_ID = 1
+
+        private const val EXPONENTIAL_ID = 0
+        private const val LINEAR_ID = 1
 
         fun parse(workerConfig: WorkerConfig): ConfigEntity {
             return ConfigEntity(
                 id = 1,
-                frequency = workerConfig.frequency,
-                frequencyUnit = when (workerConfig.frequencyUnit) {
-                    WorkerConfig.FrequencyUnit.MINUTE -> MINUTE_ID
-                    WorkerConfig.FrequencyUnit.HOUR -> HOUR_ID
+                interval = workerConfig.interval,
+                intervalUnit = when (workerConfig.intervalUnit) {
+                    WorkerConfig.IntervalUnit.MINUTE -> MINUTE_ID
+                    WorkerConfig.IntervalUnit.HOUR -> HOUR_ID
+                },
+                retryInterval = workerConfig.retryInterval,
+                retryIntervalUnit = when (workerConfig.retryIntervalUnit) {
+                    WorkerConfig.IntervalUnit.MINUTE -> MINUTE_ID
+                    WorkerConfig.IntervalUnit.HOUR -> HOUR_ID
+                },
+                retryPolicy = when (workerConfig.retryPolicy) {
+                    WorkerConfig.RetryPolicy.EXPONENTIAL -> EXPONENTIAL_ID
+                    WorkerConfig.RetryPolicy.LINEAR -> LINEAR_ID
                 },
                 successRatio = workerConfig.successRatio,
                 failureRatio = workerConfig.failureRatio,
@@ -37,10 +52,19 @@ data class ConfigEntity(
 
         fun parse(configEntity: ConfigEntity): WorkerConfig {
             return WorkerConfig(
-                frequency = configEntity.frequency,
-                frequencyUnit = when (configEntity.frequencyUnit) {
-                    MINUTE_ID -> WorkerConfig.FrequencyUnit.MINUTE
-                    else -> WorkerConfig.FrequencyUnit.HOUR
+                interval = configEntity.interval,
+                intervalUnit = when (configEntity.intervalUnit) {
+                    MINUTE_ID -> WorkerConfig.IntervalUnit.MINUTE
+                    else -> WorkerConfig.IntervalUnit.HOUR
+                },
+                retryInterval = configEntity.retryInterval,
+                retryIntervalUnit = when (configEntity.retryIntervalUnit) {
+                    MINUTE_ID -> WorkerConfig.IntervalUnit.MINUTE
+                    else -> WorkerConfig.IntervalUnit.HOUR
+                },
+                retryPolicy = when (configEntity.retryPolicy) {
+                    EXPONENTIAL_ID -> WorkerConfig.RetryPolicy.EXPONENTIAL
+                    else -> WorkerConfig.RetryPolicy.LINEAR
                 },
                 successRatio = configEntity.successRatio,
                 failureRatio = configEntity.failureRatio,

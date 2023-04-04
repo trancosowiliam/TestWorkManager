@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.dalcim.testworkmanager.database.domain.ConfigEntity
 import com.dalcim.testworkmanager.database.domain.BreadcrumbEntity
 
-@Database(entities = [ConfigEntity::class, BreadcrumbEntity::class], version = 2)
+@Database(entities = [ConfigEntity::class, BreadcrumbEntity::class], version = 1)
 abstract class TestWorkManagerDatabase : RoomDatabase() {
     abstract fun configDao(): ConfigDao
     abstract fun breadcrumbDao(): BreadcrumbDao

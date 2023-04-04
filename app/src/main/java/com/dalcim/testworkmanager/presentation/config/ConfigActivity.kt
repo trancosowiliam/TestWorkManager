@@ -30,14 +30,22 @@ class ConfigActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        val adapter = ArrayAdapter.createFromResource(
+        val intervalAdapter = ArrayAdapter.createFromResource(
             this,
-            R.array.frequency,
+            R.array.interval_unit,
             android.R.layout.simple_spinner_item
         )
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerFrequency.adapter = adapter
+        val policyAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.retry_policy,
+            android.R.layout.simple_spinner_item
+        )
+
+        intervalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerInterval.adapter = intervalAdapter
+        binding.spinnerRetryInterval.adapter = intervalAdapter
+        binding.spinnerRetryPolicy.adapter = policyAdapter
     }
 
     private fun setupListeners() {
@@ -52,13 +60,26 @@ class ConfigActivity : AppCompatActivity() {
 
     private fun loadConfig() {
         val config = repository.getConfig()
-        binding.spinnerFrequency.setSelection(
-            when(config.frequencyUnit) {
-                WorkerConfig.FrequencyUnit.MINUTE -> 0
+        binding.edtInterval.setText(config.interval.toString())
+        binding.spinnerInterval.setSelection(
+            when(config.intervalUnit) {
+                WorkerConfig.IntervalUnit.MINUTE -> 0
                 else -> 1
             }
         )
-        binding.edtFrequency.setText(config.frequency.toString())
+        binding.edtRetryInterval.setText(config.retryInterval.toString())
+        binding.spinnerRetryInterval.setSelection(
+            when(config.retryIntervalUnit) {
+                WorkerConfig.IntervalUnit.MINUTE -> 0
+                else -> 1
+            }
+        )
+        binding.spinnerRetryPolicy.setSelection(
+            when(config.retryPolicy) {
+                WorkerConfig.RetryPolicy.EXPONENTIAL -> 0
+                else -> 1
+            }
+        )
         binding.edtReturnSuccess.setText(config.successRatio.toString())
         binding.edtReturnFailure.setText(config.failureRatio.toString())
         binding.edtReturnRetry.setText(config.retryRatio.toString())
@@ -69,20 +90,35 @@ class ConfigActivity : AppCompatActivity() {
             return
         }
 
-        val spinnerIndexSelected = binding.spinnerFrequency.selectedItemPosition
+        val spinnerIntervalIndexSelected = binding.spinnerInterval.selectedItemPosition
+        val spinnerRetryIntervalIndexSelected = binding.spinnerRetryInterval.selectedItemPosition
+        val spinnerRetryPolicyIndexSelected = binding.spinnerRetryPolicy.selectedItemPosition
 
-        val frequency = binding.edtFrequency.text?.toString()?.toInt() ?: 0
-        val frequencyUnit = when (spinnerIndexSelected) {
-            0 -> WorkerConfig.FrequencyUnit.MINUTE
-            else -> WorkerConfig.FrequencyUnit.HOUR
+        val interval = binding.edtInterval.text?.toString()?.toInt() ?: 0
+        val intervalUnit = when (spinnerIntervalIndexSelected) {
+            0 -> WorkerConfig.IntervalUnit.MINUTE
+            else -> WorkerConfig.IntervalUnit.HOUR
         }
+        val retryInterval = binding.edtRetryInterval.text?.toString()?.toInt() ?: 0
+        val retryIntervalUnit = when (spinnerRetryIntervalIndexSelected) {
+            0 -> WorkerConfig.IntervalUnit.MINUTE
+            else -> WorkerConfig.IntervalUnit.HOUR
+        }
+        val retryPolicy = when (spinnerRetryPolicyIndexSelected) {
+            0 -> WorkerConfig.RetryPolicy.EXPONENTIAL
+            else -> WorkerConfig.RetryPolicy.LINEAR
+        }
+
         val successRatio = binding.edtReturnSuccess.intValue
         val failureRatio = binding.edtReturnFailure.intValue
         val retryRatio = binding.edtReturnRetry.intValue
 
         val workerConfig = WorkerConfig(
-            frequency = frequency,
-            frequencyUnit = frequencyUnit,
+            interval = interval,
+            intervalUnit = intervalUnit,
+            retryInterval = retryInterval,
+            retryIntervalUnit = retryIntervalUnit,
+            retryPolicy = retryPolicy,
             successRatio = successRatio,
             failureRatio = failureRatio,
             retryRatio = retryRatio
@@ -109,7 +145,7 @@ class ConfigActivity : AppCompatActivity() {
             "Adicione um peso".also {
                 showMessage(it)
             }
-        } else if (binding.edtFrequency.intValue < 15 && binding.spinnerFrequency.selectedItemPosition == 0) {
+        } else if (binding.edtInterval.intValue < 15 && binding.spinnerInterval.selectedItemPosition == 0) {
             "A Frenquencia minima é 15 minutos".also {
                 showMessage(it)
             }

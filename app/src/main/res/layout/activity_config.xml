@@ -9,35 +9,84 @@
     tools:context=".presentation.config.ConfigActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/lblFrequency"
+        android:id="@+id/lblInterval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Frequencia"
+        android:text="Intervalo do job"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtFrequency"
+        android:id="@+id/edtInterval"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="40"
         android:inputType="number"
         android:textAlignment="textEnd"
-        app:layout_constraintEnd_toStartOf="@id/spinnerFrequency"
+        app:layout_constraintEnd_toStartOf="@id/spinnerInterval"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblFrequency" />
+        app:layout_constraintTop_toBottomOf="@id/lblInterval" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinnerFrequency"
+        android:id="@+id/spinnerInterval"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="60"
-        app:layout_constraintBottom_toBottomOf="@+id/edtFrequency"
-        app:layout_constraintTop_toTopOf="@id/edtFrequency"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/edtInterval"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/edtFrequency" />
+        app:layout_constraintStart_toEndOf="@id/edtInterval"
+        app:layout_constraintTop_toTopOf="@id/edtInterval" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblRetryInterval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_separator"
+        android:text="Intervalo de retentativa"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtInterval" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtRetryInterval"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="40"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toStartOf="@id/spinnerRetryInterval"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblRetryInterval" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerRetryInterval"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/edtRetryInterval"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/edtRetryInterval"
+        app:layout_constraintTop_toTopOf="@id/edtRetryInterval" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lblRetryPolicy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_separator"
+        android:text="Intervalo de retentativa"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtRetryInterval" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerRetryPolicy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblRetryPolicy" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/lblReturns"
@@ -48,7 +97,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtFrequency" />
+        app:layout_constraintTop_toBottomOf="@id/spinnerRetryPolicy" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/lblReturnSuccess"

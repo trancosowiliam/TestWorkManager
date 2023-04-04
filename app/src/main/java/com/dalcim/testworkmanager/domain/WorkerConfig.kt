@@ -1,22 +1,33 @@
 package com.dalcim.testworkmanager.domain
 
 data class WorkerConfig(
-    val frequency: Int,
-    val frequencyUnit: FrequencyUnit,
+    val interval: Int,
+    val intervalUnit: IntervalUnit,
+    val retryInterval: Int,
+    val retryIntervalUnit: IntervalUnit,
+    val retryPolicy: RetryPolicy,
     val successRatio: Int,
     val failureRatio: Int,
     val retryRatio: Int
 ) {
-    enum class FrequencyUnit {
-        HOUR,
-        MINUTE
+    enum class IntervalUnit {
+        MINUTE,
+        HOUR
+    }
+
+    enum class RetryPolicy {
+        EXPONENTIAL,
+        LINEAR
     }
 
     companion object {
         val EMPTY = WorkerConfig(
-            frequency = 0,
-            frequencyUnit = FrequencyUnit.MINUTE,
-            successRatio = 0,
+            interval = 12,
+            intervalUnit = IntervalUnit.HOUR,
+            retryInterval = 6,
+            retryIntervalUnit = IntervalUnit.HOUR,
+            retryPolicy = RetryPolicy.LINEAR,
+            successRatio = 100,
             failureRatio = 0,
             retryRatio = 0
         )

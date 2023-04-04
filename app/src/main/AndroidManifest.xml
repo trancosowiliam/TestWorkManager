@@ -4,6 +4,7 @@
     package="com.dalcim.testworkmanager">
 
     <application
+        android:name=".TestWMApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -42,6 +43,11 @@
                 <action android:name="action-schedule-test" />
             </intent-filter>
         </service>
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove"/>
 
     </application>
 

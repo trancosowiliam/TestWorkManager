@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dalcim.testworkmanager.service.ServiceRunner
 import com.dalcim.testworkmanager.databinding.ActivityMainBinding
+import com.dalcim.testworkmanager.domain.Breadcrumb
 import com.dalcim.testworkmanager.presentation.config.ConfigActivity
 import com.dalcim.testworkmanager.presentation.loglist.LogListActivity
+import com.dalcim.testworkmanager.repository.BreadcrumbRepository
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val breadcrumbRepository by lazy { BreadcrumbRepository(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnStartServer.setOnClickListener {
+            breadcrumbRepository.addBreadcrumb(Breadcrumb("MainActivity", "click btnStartServer"))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(Intent(this, ServiceRunner::class.java))
             } else {
@@ -28,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnScheduleServer.setOnClickListener {
+            breadcrumbRepository.addBreadcrumb(Breadcrumb("MainActivity", "click btnScheduleServer"))
+
             scheduleTest()
         }
 

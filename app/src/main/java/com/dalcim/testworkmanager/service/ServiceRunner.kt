@@ -15,9 +15,12 @@ import com.dalcim.testworkmanager.domain.Breadcrumb
 import com.dalcim.testworkmanager.ext.createForegroundNotification
 import com.dalcim.testworkmanager.notifier.createChannelIfNeeded
 import com.dalcim.testworkmanager.repository.BreadcrumbRepository
+import com.dalcim.testworkmanager.service.TestWorker.Companion.EXECUTOR_FROM_KEY
+import com.dalcim.testworkmanager.service.TestWorker.Companion.FROM_APP
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.concurrent.TimeUnit
 
+// PdmUpdaterService
 class ServiceRunner : Service() {
 
     private val repository by lazy { BreadcrumbRepository(this) }
@@ -60,7 +63,7 @@ class ServiceRunner : Service() {
             isWithDelay: Boolean = false
         ) {
             val data = Data.Builder().apply {
-                putString("from", "startCommand")
+                putString(EXECUTOR_FROM_KEY, FROM_APP)
             }
             val workerRequest = OneTimeWorkRequestBuilder<TestWorker>().apply {
                 addTag(executionFrom)

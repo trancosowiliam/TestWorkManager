@@ -14,8 +14,11 @@ import com.dalcim.testworkmanager.ext.createForegroundNotification
 import com.dalcim.testworkmanager.notifier.createChannelIfNeeded
 import com.dalcim.testworkmanager.repository.BreadcrumbRepository
 import com.dalcim.testworkmanager.repository.ConfigRepository
+import com.dalcim.testworkmanager.service.TestWorker.Companion.EXECUTOR_FROM_KEY
+import com.dalcim.testworkmanager.service.TestWorker.Companion.FROM_SCHEDULER
 import java.util.concurrent.TimeUnit
 
+// UpdatesSchedulerService
 class ServiceScheduler: Service() {
 
     private val breadcrumbRepository by lazy { BreadcrumbRepository(this) }
@@ -77,7 +80,7 @@ class ServiceScheduler: Service() {
         breadcrumbRepository.addBreadcrumb(Breadcrumb("ServiceScheduler", "createPeriodicWorkRequest interval:$interval, timeUnit:$intervalUnit"))
 
         val data = Data.Builder().apply {
-            putString("from", "scheduler")
+            putString(EXECUTOR_FROM_KEY, FROM_SCHEDULER)
         }
 
         return PeriodicWorkRequestBuilder<TestWorker>(interval, intervalUnit).apply {

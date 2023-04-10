@@ -29,7 +29,7 @@ class TestWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        breadcrumbRepository.addBreadcrumb(Breadcrumb("TestWorker", "doWork entry"))
+        breadcrumbRepository.addBreadcrumb(Breadcrumb("TestWorker", "doWork entry, attempt: $runAttemptCount"))
         val config = configRepository.getConfig()
 
         val executionFrom = inputData.getString(EXECUTOR_FROM_KEY)

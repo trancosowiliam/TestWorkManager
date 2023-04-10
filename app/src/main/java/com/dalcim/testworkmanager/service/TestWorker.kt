@@ -30,6 +30,7 @@ class TestWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         breadcrumbRepository.addBreadcrumb(Breadcrumb("TestWorker", "doWork entry"))
+        val config = configRepository.getConfig()
 
         val executionFrom = inputData.getString(EXECUTOR_FROM_KEY)
         val isFromApplication = executionFrom == FROM_APP
@@ -42,7 +43,7 @@ class TestWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
         if (isFromScheduler && shouldRunning().not()) {
             breadcrumbRepository.addBreadcrumb(Breadcrumb("TestWorker", "skip"))
-            return@withContext Result.success()
+            return@withContext randomizeResult(config)
         } else {
             breadcrumbRepository.addBreadcrumb(Breadcrumb("TestWorker", "run"))
             workerConfigDatabase.saveLastJobRunTime(Date().time)
@@ -65,8 +66,6 @@ class TestWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
         }
 
         setForeground(createForegroundInfo())
-
-        val config = configRepository.getConfig()
 
         return@withContext randomizeResult(config)
     }

@@ -88,7 +88,9 @@ class ServiceScheduler: Service() {
             setConstraints(constraints)
             setBackoffCriteria(retryPolicy, retryInterval, retryIntervalUnit)
             setInputData(data.build())
-        }.build()
+        }.build().also {
+            breadcrumbRepository.addBreadcrumb(Breadcrumb("ServiceScheduler.PeriodicWorkRequestBuilder", "id: ${it.id}"))
+        }
     }
 
     private fun createNotification(): Notification {
